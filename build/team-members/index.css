@@ -3,8 +3,12 @@
   \*****************************************************************************************************************************************************************************************************************************************************/
 .wp-block-create-block-team-members {
   display: block;
+  /* stylelint-disable-next-line selector-class-pattern */
 }
-.wp-block-create-block-team-members.has-1-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-members"] {
+.wp-block-create-block-team-members.has-1-columns {
+  /* stylelint-disable-next-line selector-class-pattern */
+}
+.wp-block-create-block-team-members.has-1-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-member"] {
   width: calc(100% / 1 - 20px);
 }
 .wp-block-create-block-team-members.has-1-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender {
@@ -16,7 +20,10 @@
   justify-content: center;
   min-height: 70px;
 }
-.wp-block-create-block-team-members.has-2-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-members"] {
+.wp-block-create-block-team-members.has-2-columns {
+  /* stylelint-disable-next-line selector-class-pattern */
+}
+.wp-block-create-block-team-members.has-2-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-member"] {
   width: calc(100% / 2 - 20px);
 }
 .wp-block-create-block-team-members.has-2-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender {
@@ -28,7 +35,10 @@
   justify-content: center;
   min-height: 70px;
 }
-.wp-block-create-block-team-members.has-3-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-members"] {
+.wp-block-create-block-team-members.has-3-columns {
+  /* stylelint-disable-next-line selector-class-pattern */
+}
+.wp-block-create-block-team-members.has-3-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-member"] {
   width: calc(100% / 3 - 20px);
 }
 .wp-block-create-block-team-members.has-3-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender {
@@ -40,7 +50,10 @@
   justify-content: center;
   min-height: 70px;
 }
-.wp-block-create-block-team-members.has-4-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-members"] {
+.wp-block-create-block-team-members.has-4-columns {
+  /* stylelint-disable-next-line selector-class-pattern */
+}
+.wp-block-create-block-team-members.has-4-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-member"] {
   width: calc(100% / 4 - 20px);
 }
 .wp-block-create-block-team-members.has-4-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender {
@@ -52,7 +65,10 @@
   justify-content: center;
   min-height: 70px;
 }
-.wp-block-create-block-team-members.has-5-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-members"] {
+.wp-block-create-block-team-members.has-5-columns {
+  /* stylelint-disable-next-line selector-class-pattern */
+}
+.wp-block-create-block-team-members.has-5-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-member"] {
   width: calc(100% / 5 - 20px);
 }
 .wp-block-create-block-team-members.has-5-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender {
@@ -64,7 +80,10 @@
   justify-content: center;
   min-height: 70px;
 }
-.wp-block-create-block-team-members.has-6-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-members"] {
+.wp-block-create-block-team-members.has-6-columns {
+  /* stylelint-disable-next-line selector-class-pattern */
+}
+.wp-block-create-block-team-members.has-6-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-member"] {
   width: calc(100% / 6 - 20px);
 }
 .wp-block-create-block-team-members.has-6-columns > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender {
@@ -82,23 +101,25 @@
   margin-left: -10px;
   margin-right: -10px;
 }
-.wp-block-create-block-team-members > .block-editor-inner-blocks > .block-editor-block-list__layout [data-type="create-block/team-members"] {
+.wp-block-create-block-team-members > .block-editor-inner-blocks > .block-editor-block-list__layout [data-type="create-block/team-member"] {
   max-width: none;
   margin: 0;
 }
-.wp-block-create-block-team-members > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-members"] {
+.wp-block-create-block-team-members > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-member"] {
   margin: 10px;
 }
-.wp-block-create-block-team-members > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-members"] h4 {
+.wp-block-create-block-team-members > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-member"] h4 {
+  color: #222;
   font-size: 22px;
-  color: 0;
   font-size: bold;
+  margin: 0;
 }
-.wp-block-create-block-team-members > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-members"] p {
+.wp-block-create-block-team-members > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="create-block/team-member"] p {
   color: #565656;
   font-size: 16px;
   font-weight: 300;
   margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 /*# sourceMappingURL=index.css.map*/
