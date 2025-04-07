@@ -5,6 +5,7 @@
 	"author": "The WordPress Contributors",
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
+	"prettier": "@wordpress/prettier-config",
 	"scripts": {
 		"build": "wp-scripts build --blocks-manifest",
 		"format": "wp-scripts format",
@@ -15,6 +16,11 @@
 		"start": "wp-scripts start --blocks-manifest"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^30.14.1"
+		"@wordpress/eslint-plugin": "^22.7.0",
+		"@wordpress/prettier-config": "^4.21.0",
+		"@wordpress/scripts": "^30.14.1",
+		"@wordpress/stylelint-config": "^23.12.0",
+		"eslint-config-prettier": "^10.1.1",
+		"eslint-plugin-prettier": "^5.2.5"
 	}
 }
