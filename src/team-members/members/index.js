@@ -22,6 +22,23 @@ registerBlockType( 'create-block/team-member', {
             type: "string",
             source: "html",
             selector: "p"
+        },
+        id: {
+            type: 'number'
+
+        },
+        alt: {
+            type: 'string',
+            source: 'attribute',
+            selector: 'img',
+            attribute: 'alt',
+            default: ''
+        },
+        url: {
+            type: 'string',
+            source: 'attribute',
+            selector: 'img',
+            attribute: 'src'
         }
     },
     edit: Edit,
