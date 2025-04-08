@@ -144,6 +144,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// import { useSelect } from '@wordpress/data';
 
 function Edit({
   attributes,
@@ -159,6 +160,41 @@ function Edit({
     id
   } = attributes;
   const [blobURL, setBlobURL] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)();
+
+  // const imageObject = useSelect(
+  // 	( select ) => {
+  // 		const { getMedia } = select( 'core' );
+  // 		return id ? getMedia( id ) : null;
+  // 	},
+  // 	[ id ]
+  // );
+
+  // const imageSizes = useSelect( ( select ) => {
+  // 	return select( blockEditorStore ).getSettings().imageSizes;
+  // }, [] );
+
+  // const getImageSizeOptions = () => {
+  // 	if ( ! imageObject ) return [];
+  // 	const options = [];
+  // 	const sizes = imageObject.media_details.sizes;
+  // 	for ( const key in sizes ) {
+  // 		const size = sizes[ key ];
+  // 		const imageSize = imageSizes.find( ( s ) => s.slug === key );
+  // 		if ( imageSize ) {
+  // 			options.push( {
+  // 				label: imageSize.name,
+  // 				value: size.source_url,
+  // 			} );
+  // 		}
+  // 	}
+  // 	return options;
+  // };
+  // const handleImageSize = ( newURL ) => {
+  // 	setAttributes( {
+  // 		url: newURL,
+  // 	} );
+  // };
+
   const handleName = newName => {
     setAttributes({
       name: newName
