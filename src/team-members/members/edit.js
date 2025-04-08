@@ -5,10 +5,10 @@ import {
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import { isBlobURL } from '@wordpress/blob';
-import { Spinner } from '@wordpress/components';
-export default function Edit( { attributes, setAttributes } ) {
+import { Spinner, withNotices } from '@wordpress/components';
+function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) {
 	const { name, bio, url, alt } = attributes;
-
+	
 	const handleName = ( newName ) => {
 		setAttributes( { name: newName } );
 	};
@@ -33,6 +33,19 @@ export default function Edit( { attributes, setAttributes } ) {
 		} );
 	};
 
+	const handleURLImage = ( newUrl ) => {
+		setAttributes( {
+			url: newUrl,
+			id: undefined,
+			alt: '',
+		} );
+	};
+
+	const onUploadError = (message) => {
+		noticeOperations.removeAllNotices()    // that will help us to remove older error notices
+		noticeOperations.createErrorNotice(message)
+	}
+
 	return (
 		<div { ...useBlockProps() }>
 			{ url && (
@@ -49,11 +62,12 @@ export default function Edit( { attributes, setAttributes } ) {
 			<MediaPlaceholder
 				icon="admin-users"
 				onSelect={ handleImage }
-				onSelectURL={ ( va ) => console.log( 'url..', va ) }
-				onError={ ( e ) => console.log( e ) }
-				accept="image/*" // from local divice to add
+				onSelectURL={ handleURLImage }
+				onError={ onUploadError }
+				// accept="image/*" // from local divice to add
 				allowedTypes={ [ 'image' ] } //from media to select
-				disableMediaButtons={ url }
+				disableMediaButtons={url}
+				notices={noticeUI}
 			/>
 			<RichText
 				placeholder={ __( 'Member Name', 'team-member' ) }
@@ -70,3 +84,5 @@ export default function Edit( { attributes, setAttributes } ) {
 		</div>
 	);
 }
+
+export default withNotices(Edit)

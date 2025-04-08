@@ -28,6 +28,9 @@
 .wp-block-create-block-team-members .wp-block-create-block-team-member {
   margin: 10px;
 }
+.wp-block-create-block-team-members .wp-block-create-block-team-member img {
+  margin-bottom: 20px;
+}
 .wp-block-create-block-team-members .wp-block-create-block-team-member h4 {
   font-size: 22px;
   color: #565656;
