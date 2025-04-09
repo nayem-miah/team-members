@@ -15,13 +15,23 @@ import {
 	ToolbarButton,
 	PanelBody,
 	TextareaControl,
+	Icon,
+	Tooltip,
 } from '@wordpress/components';
 import { useEffect, useState, useRef } from '@wordpress/element';
 
-function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) {
-	const { name, bio, url, alt, id } = attributes;
+function Edit( {
+	attributes,
+	setAttributes,
+	noticeOperations,
+	noticeUI,
+	isSelected,
+} ) {
+	const { name, bio, url, alt, id, socialLinks } = attributes;
 
 	const [ blobURL, setBlobURL ] = useState();
+	const [ selectedLink, setSelectedLink ] = useState();
+
 	const titleRef = useRef();
 
 	const handleName = ( newName ) => {
@@ -73,6 +83,20 @@ function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) {
 		setAttributes( {
 			alt: newAlt,
 		} );
+	};
+
+	const addNewSocialIcon = () => {
+		setAttributes( {
+			socialLinks: [
+				...socialLinks,
+				{
+					icon: 'wordpress',
+					link: '',
+				},
+			],
+		});
+		
+		setSelectedLink(socialLinks.length)
 	};
 
 	useEffect( () => {
@@ -181,6 +205,56 @@ function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) {
 					onChange={ handleBio }
 					value={ bio }
 				/>
+
+				<div className="wp-block-blocks-course-team-member-social-links">
+					<ul>
+						{ socialLinks.map( ( item, index ) => {
+							return (
+								<li
+									key={ index }
+									className={
+										selectedLink === index
+											? 'is-selected'
+											: null
+									}
+								>
+									<button
+										onClick={ () =>
+											setSelectedLink( index )
+										}
+										aria-label={ __(
+											'Edit Social Link',
+											'team-members'
+										) }
+									>
+										<Icon icon={ item?.icon } />
+									</button>
+								</li>
+							);
+						} ) }
+
+						{ isSelected && (
+							<li className="wp-block-blocks-course-team-member-add-icon-li">
+								<Tooltip
+									text={ __(
+										'Add Social Link',
+										'team-members'
+									) }
+								>
+									<button
+										aria-label={ __(
+											'Add Social Link',
+											'team-members'
+										) }
+										onClick={ addNewSocialIcon }
+									>
+										<Icon icon="plus" />
+									</button>
+								</Tooltip>
+							</li>
+						) }
+					</ul>
+				</div>
 			</div>
 		</>
 	);
