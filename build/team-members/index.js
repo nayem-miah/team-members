@@ -220,6 +220,20 @@ function Edit({
     });
     setSelectedLink(socialLinks.length);
   };
+  const updateSocialItem = (type, value) => {
+    const socialLinksCopy = [...socialLinks];
+    socialLinksCopy[selectedLink][type] = value;
+    setAttributes({
+      socialLinks: socialLinksCopy
+    });
+  };
+  const removeSocialItem = () => {
+    const updatedLinks = socialLinks.filter((_, index) => index !== selectedLink);
+    setAttributes({
+      socialLinks: updatedLinks
+    });
+    setSelectedLink(); // clear selection
+  };
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
     if (!id && (0,_wordpress_blob__WEBPACK_IMPORTED_MODULE_2__.isBlobURL)(url)) {
       setAttributes({
@@ -336,6 +350,25 @@ function Edit({
             })
           })]
         })
+      }), selectedLink !== undefined && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
+        className: "wp-block-blocks-course-team-member-link-form",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Icon', 'team-members'),
+          value: socialLinks[selectedLink].icon,
+          onChange: iconName => {
+            updateSocialItem('icon', iconName);
+          }
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('URL', 'team-members'),
+          value: socialLinks[selectedLink].link,
+          onChange: linkUrl => {
+            updateSocialItem('link', linkUrl);
+          }
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("br", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+          isDestructive: true,
+          onClick: removeSocialItem,
+          children: [' ', (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Remove Link', 'team-members')]
+        })]
       })]
     })]
   });
@@ -406,6 +439,19 @@ __webpack_require__.r(__webpack_exports__);
         link: 'https:/instagram.com',
         icon: 'instagram'
       }]
+      // source: 'query',
+      // selector: '.wp-block-blocks-course-team-member-social-links ul li',
+      // query: {
+      // 	icon: {
+      // 		source: 'attribute',
+      // 		attribute: 'data-icon',
+      // 	},
+      // 	link: {
+      // 		source: 'attribute',
+      // 		selector: 'a',
+      // 		attribute: 'href',
+      // 	},                                       //it is about social devemeter remove and improve the code, and reduce pressure on DB, I will see the code later. video no. 68
+      // },
     }
   },
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -461,6 +507,7 @@ function Save({
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("ul", {
         children: socialLinks.length > 0 && socialLinks.map((item, index) => {
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
+            "data-icon": item.icon,
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("a", {
               href: item.link,
               target: "__blank",

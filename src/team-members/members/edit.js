@@ -17,6 +17,8 @@ import {
 	TextareaControl,
 	Icon,
 	Tooltip,
+	TextControl,
+	Button,
 } from '@wordpress/components';
 import { useEffect, useState, useRef } from '@wordpress/element';
 
@@ -94,10 +96,25 @@ function Edit( {
 					link: '',
 				},
 			],
-		});
-		
-		setSelectedLink(socialLinks.length)
+		} );
+
+		setSelectedLink( socialLinks.length );
 	};
+
+	const updateSocialItem = ( type, value ) => {
+		const socialLinksCopy = [ ...socialLinks ];
+		socialLinksCopy[ selectedLink ][ type ] = value;
+		setAttributes( { socialLinks: socialLinksCopy } );
+	};
+
+const removeSocialItem = () => {
+	const updatedLinks = socialLinks.filter(
+		( _, index ) => index !== selectedLink
+	);
+	setAttributes( { socialLinks: updatedLinks } );
+	setSelectedLink(); // clear selection
+};
+
 
 	useEffect( () => {
 		if ( ! id && isBlobURL( url ) ) {
@@ -255,6 +272,30 @@ function Edit( {
 						) }
 					</ul>
 				</div>
+
+				{ selectedLink !== undefined && (
+					<div className="wp-block-blocks-course-team-member-link-form">
+						<TextControl
+							label={ __( 'Icon', 'team-members' ) }
+							value={ socialLinks[ selectedLink ].icon }
+							onChange={ ( iconName ) => {
+								updateSocialItem( 'icon', iconName );
+							} }
+						/>
+						<TextControl
+							label={ __( 'URL', 'team-members' ) }
+							value={ socialLinks[ selectedLink ].link }
+							onChange={ ( linkUrl ) => {
+								updateSocialItem( 'link', linkUrl );
+							} }
+						/>
+						<br />
+						<Button isDestructive onClick={ removeSocialItem }>
+							{ ' ' }
+							{ __( 'Remove Link', 'team-members' ) }
+						</Button>
+					</div>
+				) }
 			</div>
 		</>
 	);

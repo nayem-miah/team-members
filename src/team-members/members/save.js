@@ -19,7 +19,7 @@ export default function Save( { attributes } ) {
 					{ socialLinks.length > 0 &&
 						socialLinks.map( ( item, index ) => {
 							return (
-								<li key={ index }>
+								<li key={ index } data-icon={item.icon}>
 									<a href= {item.link} target='__blank'>
 										<Icon icon={ item?.icon } />
 									</a>

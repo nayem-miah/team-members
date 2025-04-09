@@ -45,6 +45,19 @@ registerBlockType( 'create-block/team-member', {
 				{ link: 'https:/facebook.com', icon: 'facebook' },
 				{ link: 'https:/instagram.com', icon: 'instagram' },
 			],
+			// source: 'query',
+			// selector: '.wp-block-blocks-course-team-member-social-links ul li',
+			// query: {
+			// 	icon: {
+			// 		source: 'attribute',
+			// 		attribute: 'data-icon',
+			// 	},
+			// 	link: {
+			// 		source: 'attribute',
+			// 		selector: 'a',
+			// 		attribute: 'href',
+			// 	},                                       //it is about social devemeter remove and improve the code, and reduce pressure on DB, I will see the code later. video no. 68
+			// },
 		},
 	},
 	edit: Edit,
