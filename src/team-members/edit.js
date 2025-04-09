@@ -30,7 +30,7 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 			</InspectorControls>
 			<InnerBlocks
-				allowedBlocks={ [ 'create-block/team-member' ] }
+				allowedBlocks={ [ 'create-block/team-member', 'core/heading' ] }  // Here is the child blocks i want to allow in my team member block
 				template={ [
 					[ 'create-block/team-member' ],
 					[ 'create-block/team-member' ],

@@ -9,6 +9,7 @@ import {
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import { isBlobURL, revokeBlobURL } from '@wordpress/blob';
+import { usePrevious } from '@wordpress/compose';
 import {
 	Spinner,
 	withNotices,
@@ -27,12 +28,14 @@ function Edit( {
 	setAttributes,
 	noticeOperations,
 	noticeUI,
-	isSelected,
+	isSelected,    // isSelected prop tells you whether your block is currently selected or not.
 } ) {
 	const { name, bio, url, alt, id, socialLinks } = attributes;
 
 	const [ blobURL, setBlobURL ] = useState();
-	const [ selectedLink, setSelectedLink ] = useState();
+	const [selectedLink, setSelectedLink] = useState();
+	const prevIsSelected = usePrevious( isSelected );
+
 
 	const titleRef = useRef();
 
@@ -107,14 +110,13 @@ function Edit( {
 		setAttributes( { socialLinks: socialLinksCopy } );
 	};
 
-const removeSocialItem = () => {
-	const updatedLinks = socialLinks.filter(
-		( _, index ) => index !== selectedLink
-	);
-	setAttributes( { socialLinks: updatedLinks } );
-	setSelectedLink(); // clear selection
-};
-
+	const removeSocialItem = () => {
+		const updatedLinks = socialLinks.filter(
+			( _, index ) => index !== selectedLink
+		);
+		setAttributes( { socialLinks: updatedLinks } );
+		setSelectedLink(); // clear selection
+	};
 
 	useEffect( () => {
 		if ( ! id && isBlobURL( url ) ) {
@@ -143,7 +145,15 @@ const removeSocialItem = () => {
 
 	useEffect( () => {
 		titleRef.current.focus();
-	}, [ url ] );
+	}, [url]);
+
+	useEffect( () => {
+		if ( prevIsSelected && ! isSelected ) {
+			setSelectedLink();
+		}
+	}, [ isSelected, prevIsSelected ] );
+
+	
 	return (
 		<>
 			{ url && ! isBlobURL( url ) && (
@@ -236,9 +246,9 @@ const removeSocialItem = () => {
 									}
 								>
 									<button
-										onClick={ () =>
-											setSelectedLink( index )
-										}
+										onClick={ () => {
+											setSelectedLink( index );
+										} }
 										aria-label={ __(
 											'Edit Social Link',
 											'team-members'
@@ -291,7 +301,6 @@ const removeSocialItem = () => {
 						/>
 						<br />
 						<Button isDestructive onClick={ removeSocialItem }>
-							{ ' ' }
 							{ __( 'Remove Link', 'team-members' ) }
 						</Button>
 					</div>
