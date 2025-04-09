@@ -8,7 +8,7 @@
   \*************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/team-members","version":"0.1.0","title":"Team Members","category":"media","icon":"groups","keywords":["groups","team","teams","group","grid","members"],"description":"A team member grid.","example":{},"supports":{"html":false},"textdomain":"team-members","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","attributes":{"columns":{"type":"number","default":2}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/team-members","version":"0.1.0","title":"Team Members","category":"media","icon":"groups","keywords":["groups","team","teams","group","grid","members"],"description":"A team member grid.","example":{},"supports":{"html":false,"align":["full","wide"]},"textdomain":"team-members","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","attributes":{"columns":{"type":"number","default":2}}}');
 
 /***/ }),
 
@@ -144,7 +144,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// import { useSelect } from '@wordpress/data';
 
 function Edit({
   attributes,
@@ -160,41 +159,7 @@ function Edit({
     id
   } = attributes;
   const [blobURL, setBlobURL] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useState)();
-
-  // const imageObject = useSelect(
-  // 	( select ) => {
-  // 		const { getMedia } = select( 'core' );
-  // 		return id ? getMedia( id ) : null;
-  // 	},
-  // 	[ id ]
-  // );
-
-  // const imageSizes = useSelect( ( select ) => {
-  // 	return select( blockEditorStore ).getSettings().imageSizes;
-  // }, [] );
-
-  // const getImageSizeOptions = () => {
-  // 	if ( ! imageObject ) return [];
-  // 	const options = [];
-  // 	const sizes = imageObject.media_details.sizes;
-  // 	for ( const key in sizes ) {
-  // 		const size = sizes[ key ];
-  // 		const imageSize = imageSizes.find( ( s ) => s.slug === key );
-  // 		if ( imageSize ) {
-  // 			options.push( {
-  // 				label: imageSize.name,
-  // 				value: size.source_url,
-  // 			} );
-  // 		}
-  // 	}
-  // 	return options;
-  // };
-  // const handleImageSize = ( newURL ) => {
-  // 	setAttributes( {
-  // 		url: newURL,
-  // 	} );
-  // };
-
+  const titleRef = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useRef)();
   const handleName = newName => {
     setAttributes({
       name: newName
@@ -268,6 +233,9 @@ function Edit({
   // when ulpoading completed, blob url become real url. blob url causes some memory leack
   //this useEffect is about when image uploading is completed blob url will be revoke or deleted.
 
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
+    titleRef.current.focus();
+  }, [url]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
     children: [url && !(0,_wordpress_blob__WEBPACK_IMPORTED_MODULE_2__.isBlobURL)(url) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InspectorControls, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
@@ -321,7 +289,8 @@ function Edit({
         placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Member Name', 'team-member'),
         tagName: "h4",
         onChange: handleName,
-        value: name
+        value: name,
+        ref: titleRef
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText, {
         placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Member Bio', 'team-member'),
         tagName: "p",

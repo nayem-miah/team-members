@@ -22,7 +22,11 @@ return array(
 			
 		),
 		'supports' => array(
-			'html' => false
+			'html' => false,
+			'align' => array(
+				'full',
+				'wide'
+			)
 		),
 		'textdomain' => 'team-members',
 		'editorScript' => 'file:./index.js',

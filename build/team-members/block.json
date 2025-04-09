@@ -17,7 +17,11 @@
   "description": "A team member grid.",
   "example": {},
   "supports": {
-    "html": false
+    "html": false,
+    "align": [
+      "full",
+      "wide"
+    ]
   },
   "textdomain": "team-members",
   "editorScript": "file:./index.js",

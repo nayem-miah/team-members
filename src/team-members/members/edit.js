@@ -15,49 +15,14 @@ import {
 	ToolbarButton,
 	PanelBody,
 	TextareaControl,
-	// SelectControl,
 } from '@wordpress/components';
-import { useEffect, useState } from '@wordpress/element';
-// import { useSelect } from '@wordpress/data';
+import { useEffect, useState, useRef } from '@wordpress/element';
 
 function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) {
 	const { name, bio, url, alt, id } = attributes;
 
 	const [ blobURL, setBlobURL ] = useState();
-
-	// const imageObject = useSelect(
-	// 	( select ) => {
-	// 		const { getMedia } = select( 'core' );
-	// 		return id ? getMedia( id ) : null;
-	// 	},
-	// 	[ id ]
-	// );
-
-	// const imageSizes = useSelect( ( select ) => {
-	// 	return select( blockEditorStore ).getSettings().imageSizes;
-	// }, [] );
-
-	// const getImageSizeOptions = () => {
-	// 	if ( ! imageObject ) return [];
-	// 	const options = [];
-	// 	const sizes = imageObject.media_details.sizes;
-	// 	for ( const key in sizes ) {
-	// 		const size = sizes[ key ];
-	// 		const imageSize = imageSizes.find( ( s ) => s.slug === key );
-	// 		if ( imageSize ) {
-	// 			options.push( {
-	// 				label: imageSize.name,
-	// 				value: size.source_url,
-	// 			} );
-	// 		}
-	// 	}
-	// 	return options;
-	// };
-	// const handleImageSize = ( newURL ) => {
-	// 	setAttributes( {
-	// 		url: newURL,
-	// 	} );
-	// };
+	const titleRef = useRef();
 
 	const handleName = ( newName ) => {
 		setAttributes( { name: newName } );
@@ -135,19 +100,14 @@ function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) {
 	// when ulpoading completed, blob url become real url. blob url causes some memory leack
 	//this useEffect is about when image uploading is completed blob url will be revoke or deleted.
 
+	useEffect( () => {
+		titleRef.current.focus();
+	}, [ url ] );
 	return (
 		<>
 			{ url && ! isBlobURL( url ) && (
 				<InspectorControls>
 					<PanelBody title={ __( 'Image Settings', 'team-memebrs' ) }>
-						{/* { id && (
-							<SelectControl
-								label={ __( 'Image size', 'team-members' ) }
-								options={ getImageSizeOptions }
-								value={ url }
-								onChange={ handleImageSize }
-							/>
-						) } */}
 						<TextareaControl
 							label={ __( 'Alt Text', 'team-members' ) }
 							value={ alt }
@@ -213,6 +173,7 @@ function Edit( { attributes, setAttributes, noticeOperations, noticeUI } ) {
 					tagName="h4"
 					onChange={ handleName }
 					value={ name }
+					ref={ titleRef }
 				/>
 				<RichText
 					placeholder={ __( 'Member Bio', 'team-member' ) }

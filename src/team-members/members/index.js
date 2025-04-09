@@ -39,7 +39,8 @@ registerBlockType( 'create-block/team-member', {
             source: 'attribute',
             selector: 'img',
             attribute: 'src'
-        }
+        },
+     
     },
     edit: Edit,
 	save: Save,
