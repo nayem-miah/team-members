@@ -23,7 +23,7 @@ import {
 } from '@wordpress/components';
 import { useEffect, useState, useRef } from '@wordpress/element';
 
-//drag and drop-------------------
+//drag and drop-------------------------------------------------------
 import {
 	DndContext,
 	useSensor,
@@ -37,7 +37,8 @@ import {
 } from '@dnd-kit/sortable';
 import SortableItem from '../components/members/sortable-item';
 import { restrictToHorizontalAxis } from '@dnd-kit/modifiers';
-
+import SocialLinkForm from '../components/members/SocialLinkForm';
+// drag drop-----------------------------------------------------------
 
 function Edit( {
 	attributes,
@@ -133,6 +134,34 @@ function Edit( {
 		setSelectedLink(); // clear selection
 	};
 
+	// drag drop---------------------------------------------------
+	const sensors = useSensors(
+		useSensor( PointerSensor, {
+			activationConstraint: {
+				distance: 5,
+			},
+		} )
+	);
+
+	const handleDragEnd = ( event ) => {
+		const { active, over } = event;
+		if ( active && over && active.id !== over.id ) {
+			//if active and over exist, condition works
+			const oldIndex = socialLinks.findIndex(
+				( i ) => active.id === `${ i.icon }-${ i.link }`
+			);
+			const newIndex = socialLinks.findIndex(
+				( i ) => over.id === `${ i.icon }-${ i.link }`
+			);
+			setAttributes( {
+				socialLinks: arrayMove( socialLinks, oldIndex, newIndex ),
+			} );
+
+			setSelectedLink( newIndex );
+		}
+	};
+	// drag drop-----------------------------------------------------
+
 	useEffect( () => {
 		if ( ! id && isBlobURL( url ) ) {
 			setAttributes( {
@@ -167,30 +196,6 @@ function Edit( {
 			setSelectedLink();
 		}
 	}, [ isSelected, prevIsSelected ] );
-
-	// drag drop------------------------------
-	const sensors = useSensors(useSensor(PointerSensor, {
-		activationConstraint: {
-			distance:5
-		}
-	}) );
-
-	const handleDragEnd = ( event ) => {
-		const { active, over } = event
-		if (active && over && active.id !== over.id ) {    //if active and over exist, condition works
-			const oldIndex = socialLinks.findIndex(
-				( i ) => active.id === `${ i.icon }-${ i.link }`
-			);
-			const newIndex = socialLinks.findIndex(
-				( i ) => over.id === `${ i.icon }-${ i.link }`
-			);
-			setAttributes( {
-				socialLinks: arrayMove( socialLinks, oldIndex, newIndex ),
-			});
-			
-			setSelectedLink(newIndex)
-		}
-	};
 
 	return (
 		<>
@@ -273,11 +278,11 @@ function Edit( {
 
 				<div className="wp-block-blocks-course-team-member-social-links">
 					<ul>
-						{ /* drd drag-drop ------------------- */ }
+						{ /* drd drag-drop ------------------- -----------------------------------------------------------------*/ }
 						<DndContext
 							sensors={ sensors }
-							onDragEnd={handleDragEnd}
-							modifiers={[restrictToHorizontalAxis]} // only horizontal drag drop has access
+							onDragEnd={ handleDragEnd }
+							modifiers={ [ restrictToHorizontalAxis ] } // only horizontal drag drop has access
 						>
 							<SortableContext
 								items={ socialLinks.map(
@@ -298,8 +303,7 @@ function Edit( {
 								) ) }
 							</SortableContext>
 						</DndContext>
-
-		
+						{ /* drd drag-drop ------------------- -----------------------------------------------------------------*/ }
 
 						{ isSelected && (
 							<li className="wp-block-blocks-course-team-member-add-icon-li">
@@ -325,26 +329,14 @@ function Edit( {
 				</div>
 
 				{ selectedLink !== undefined && (
-					<div className="wp-block-blocks-course-team-member-link-form">
-						<TextControl
-							label={ __( 'Icon', 'team-members' ) }
-							value={ socialLinks[ selectedLink ].icon }
-							onChange={ ( iconName ) => {
-								updateSocialItem( 'icon', iconName );
-							} }
+					<>
+						<SocialLinkForm
+							updateSocialItem={ updateSocialItem }
+							removeSocialItem={ removeSocialItem }
+							link={ socialLinks[ selectedLink ].link }
+							icon={ socialLinks[ selectedLink ].icon }
 						/>
-						<TextControl
-							label={ __( 'URL', 'team-members' ) }
-							value={ socialLinks[ selectedLink ].link }
-							onChange={ ( linkUrl ) => {
-								updateSocialItem( 'link', linkUrl );
-							} }
-						/>
-						<br />
-						<Button isDestructive onClick={ removeSocialItem }>
-							{ __( 'Remove Link', 'team-members' ) }
-						</Button>
-					</div>
+					</>
 				) }
 			</div>
 		</>
