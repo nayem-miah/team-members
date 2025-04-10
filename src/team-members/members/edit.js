@@ -23,19 +23,34 @@ import {
 } from '@wordpress/components';
 import { useEffect, useState, useRef } from '@wordpress/element';
 
+//drag and drop-------------------
+import {
+	DndContext,
+	useSensor,
+	useSensors,
+	PointerSensor,
+} from '@dnd-kit/core';
+import {
+	arrayMove,
+	horizontalListSortingStrategy,
+	SortableContext,
+} from '@dnd-kit/sortable';
+import SortableItem from '../components/members/sortable-item';
+import { restrictToHorizontalAxis } from '@dnd-kit/modifiers';
+
+
 function Edit( {
 	attributes,
 	setAttributes,
 	noticeOperations,
 	noticeUI,
-	isSelected,    // isSelected prop tells you whether your block is currently selected or not.
+	isSelected, // isSelected prop tells you whether your block is currently selected or not.
 } ) {
 	const { name, bio, url, alt, id, socialLinks } = attributes;
 
 	const [ blobURL, setBlobURL ] = useState();
-	const [selectedLink, setSelectedLink] = useState();
+	const [ selectedLink, setSelectedLink ] = useState();
 	const prevIsSelected = usePrevious( isSelected );
-
 
 	const titleRef = useRef();
 
@@ -145,7 +160,7 @@ function Edit( {
 
 	useEffect( () => {
 		titleRef.current.focus();
-	}, [url]);
+	}, [ url ] );
 
 	useEffect( () => {
 		if ( prevIsSelected && ! isSelected ) {
@@ -153,7 +168,30 @@ function Edit( {
 		}
 	}, [ isSelected, prevIsSelected ] );
 
-	
+	// drag drop------------------------------
+	const sensors = useSensors(useSensor(PointerSensor, {
+		activationConstraint: {
+			distance:5
+		}
+	}) );
+
+	const handleDragEnd = ( event ) => {
+		const { active, over } = event
+		if (active && over && active.id !== over.id ) {    //if active and over exist, condition works
+			const oldIndex = socialLinks.findIndex(
+				( i ) => active.id === `${ i.icon }-${ i.link }`
+			);
+			const newIndex = socialLinks.findIndex(
+				( i ) => over.id === `${ i.icon }-${ i.link }`
+			);
+			setAttributes( {
+				socialLinks: arrayMove( socialLinks, oldIndex, newIndex ),
+			});
+			
+			setSelectedLink(newIndex)
+		}
+	};
+
 	return (
 		<>
 			{ url && ! isBlobURL( url ) && (
@@ -235,30 +273,33 @@ function Edit( {
 
 				<div className="wp-block-blocks-course-team-member-social-links">
 					<ul>
-						{ socialLinks.map( ( item, index ) => {
-							return (
-								<li
-									key={ index }
-									className={
-										selectedLink === index
-											? 'is-selected'
-											: null
-									}
-								>
-									<button
-										onClick={ () => {
-											setSelectedLink( index );
-										} }
-										aria-label={ __(
-											'Edit Social Link',
-											'team-members'
-										) }
-									>
-										<Icon icon={ item?.icon } />
-									</button>
-								</li>
-							);
-						} ) }
+						{ /* drd drag-drop ------------------- */ }
+						<DndContext
+							sensors={ sensors }
+							onDragEnd={handleDragEnd}
+							modifiers={[restrictToHorizontalAxis]} // only horizontal drag drop has access
+						>
+							<SortableContext
+								items={ socialLinks.map(
+									( item ) =>
+										`${ item?.icon }-${ item?.link }` //we pass the socialLinks map to items prop here
+								) }
+								strategy={ horizontalListSortingStrategy }
+							>
+								{ socialLinks.map( ( item, index ) => (
+									<SortableItem
+										key={ `${ item?.icon }-${ item?.link }` }
+										id={ `${ item?.icon }-${ item?.link }` }
+										index={ index }
+										selectedLink={ selectedLink }
+										setSelectedLink={ setSelectedLink }
+										icon={ item?.icon }
+									/>
+								) ) }
+							</SortableContext>
+						</DndContext>
+
+		
 
 						{ isSelected && (
 							<li className="wp-block-blocks-course-team-member-add-icon-li">
