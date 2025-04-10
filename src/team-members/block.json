@@ -15,7 +15,6 @@
 		"members"
 	],
 	"description": "A team member grid.",
-	"example": {},
 	"supports": {
 		"html": false,
 		"align": [
@@ -30,9 +29,53 @@
 	"viewScript": "file:./view.js",
 	"attributes": {
 		"columns": {
-			"type":"number",
+			"type": "number",
 			"default": 2
-
 		}
-	}
+	},
+"example": {
+	"attributes": {
+		"columns": 2
+	},
+	"innerBlocks": [
+		{
+			"name": "create-block/team-member",
+			"attributes": {
+				"name": "Nayem Miah",
+				"bio": "Full-Stack Developer",
+				"url": "https://picsum.photos/id/1012/300/200",
+				"socialLinks": [
+					{
+						"icon": "facebook"
+					},
+					{
+						"icon": "twitter"
+					},
+					{
+						"icon": "instagram"
+					}
+				]
+			}
+		},
+		{
+			"name": "create-block/team-member",
+			"attributes": {
+				"name": "Shakib Islam",
+				"bio": "Front-end Deeloper",
+				"url": "https://picsum.photos/id/1011/300/200",
+				"socialLinks": [
+					{
+						"icon": "facebook"
+					},
+					{
+						"icon": "twitter"
+					},
+					{
+						"icon": "instagram"
+					}
+				]
+			}
+		}
+	]
+}
 }

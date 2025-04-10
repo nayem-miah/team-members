@@ -18,9 +18,6 @@ return array(
 			'members'
 		),
 		'description' => 'A team member grid.',
-		'example' => array(
-			
-		),
 		'supports' => array(
 			'html' => false,
 			'align' => array(
@@ -37,6 +34,51 @@ return array(
 			'columns' => array(
 				'type' => 'number',
 				'default' => 2
+			)
+		),
+		'example' => array(
+			'attributes' => array(
+				'columns' => 2
+			),
+			'innerBlocks' => array(
+				array(
+					'name' => 'create-block/team-member',
+					'attributes' => array(
+						'name' => 'Nayem Miah',
+						'bio' => 'Full-Stack Developer',
+						'url' => 'https://picsum.photos/id/1012/300/200',
+						'socialLinks' => array(
+							array(
+								'icon' => 'facebook'
+							),
+							array(
+								'icon' => 'twitter'
+							),
+							array(
+								'icon' => 'instagram'
+							)
+						)
+					)
+				),
+				array(
+					'name' => 'create-block/team-member',
+					'attributes' => array(
+						'name' => 'Shakib Islam',
+						'bio' => 'Front-end Deeloper',
+						'url' => 'https://picsum.photos/id/1011/300/200',
+						'socialLinks' => array(
+							array(
+								'icon' => 'facebook'
+							),
+							array(
+								'icon' => 'twitter'
+							),
+							array(
+								'icon' => 'instagram'
+							)
+						)
+					)
+				)
 			)
 		)
 	)

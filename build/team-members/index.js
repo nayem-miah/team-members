@@ -5433,7 +5433,7 @@ function findFirstFocusableNode(element) {
   \*************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/team-members","version":"0.1.0","title":"Team Members","category":"media","icon":"groups","keywords":["groups","team","teams","group","grid","members"],"description":"A team member grid.","example":{},"supports":{"html":false,"align":["full","wide"]},"textdomain":"team-members","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","attributes":{"columns":{"type":"number","default":2}}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/team-members","version":"0.1.0","title":"Team Members","category":"media","icon":"groups","keywords":["groups","team","teams","group","grid","members"],"description":"A team member grid.","supports":{"html":false,"align":["full","wide"]},"textdomain":"team-members","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","attributes":{"columns":{"type":"number","default":2}},"example":{"attributes":{"columns":2},"innerBlocks":[{"name":"create-block/team-member","attributes":{"name":"Nayem Miah","bio":"Full-Stack Developer","url":"https://picsum.photos/id/1012/300/200","socialLinks":[{"icon":"facebook"},{"icon":"twitter"},{"icon":"instagram"}]}},{"name":"create-block/team-member","attributes":{"name":"Shakib Islam","bio":"Front-end Deeloper","url":"https://picsum.photos/id/1011/300/200","socialLinks":[{"icon":"facebook"},{"icon":"twitter"},{"icon":"instagram"}]}}]}}');
 
 /***/ }),
 
@@ -5650,7 +5650,32 @@ __webpack_require__.r(__webpack_exports__);
     foreground: '#ff6900'
   },
   edit: _edit__WEBPACK_IMPORTED_MODULE_3__["default"],
-  save: _save__WEBPACK_IMPORTED_MODULE_4__["default"]
+  save: _save__WEBPACK_IMPORTED_MODULE_4__["default"],
+  transforms: {
+    from: [{
+      type: "block",
+      blocks: ['core/gallery'],
+      transform: ({
+        images,
+        columns
+      }) => {
+        const innerBlocks = images.map(({
+          url,
+          id,
+          alt
+        }) => {
+          return (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.createBlock)('create-block/team-member', {
+            alt,
+            id,
+            url
+          });
+        });
+        return (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.createBlock)('create-block/team-members', {
+          columns: columns || 2
+        }, innerBlocks);
+      }
+    }]
+  }
 });
 
 /***/ }),
@@ -5839,7 +5864,7 @@ function Edit({
   //this useEffect is about when image uploading is completed blob url will be revoke or deleted.
 
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useEffect)(() => {
-    titleRef.current.focus();
+    titleRef?.current?.focus?.();
   }, [url]);
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_5__.useEffect)(() => {
     if (prevIsSelected && !isSelected) {
@@ -5911,15 +5936,18 @@ function Edit({
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("ul", {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_dnd_kit_core__WEBPACK_IMPORTED_MODULE_6__.DndContext, {
             sensors: sensors,
-            onDragEnd: handleDragEnd,
+            onDragEnd: handleDragEnd // funcition to save the replacement of the link icon
+            ,
             modifiers: [_dnd_kit_modifiers__WEBPACK_IMPORTED_MODULE_9__.restrictToHorizontalAxis] // only horizontal drag drop has access
             ,
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_dnd_kit_sortable__WEBPACK_IMPORTED_MODULE_7__.SortableContext, {
-              items: socialLinks.map(item => `${item?.icon}-${item?.link}` //we pass the socialLinks map to items prop here
+              items: socialLinks.map(item => `${item?.icon}-${item?.link}` //we pass the sortable data map to items prop here
               ),
               strategy: _dnd_kit_sortable__WEBPACK_IMPORTED_MODULE_7__.horizontalListSortingStrategy,
               children: socialLinks.map((item, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_members_sortable_item__WEBPACK_IMPORTED_MODULE_8__["default"], {
-                id: `${item?.icon}-${item?.link}`,
+                //  key must be unique
+                id: `${item?.icon}-${item?.link}` //  id must be unique
+                ,
                 index: index,
                 selectedLink: selectedLink,
                 setSelectedLink: setSelectedLink,

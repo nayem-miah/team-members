@@ -18,8 +18,7 @@ import {
 	TextareaControl,
 	Icon,
 	Tooltip,
-	TextControl,
-	Button,
+
 } from '@wordpress/components';
 import { useEffect, useState, useRef } from '@wordpress/element';
 
@@ -188,7 +187,7 @@ function Edit( {
 	//this useEffect is about when image uploading is completed blob url will be revoke or deleted.
 
 	useEffect( () => {
-		titleRef.current.focus();
+		titleRef?.current?.focus?.();
 	}, [ url ] );
 
 	useEffect( () => {
@@ -278,23 +277,23 @@ function Edit( {
 
 				<div className="wp-block-blocks-course-team-member-social-links">
 					<ul>
-						{ /* drd drag-drop ------------------- -----------------------------------------------------------------*/ }
+						{ /* drd drag-drop ------------------------------------------------------------------------------------*/ }
 						<DndContext
 							sensors={ sensors }
-							onDragEnd={ handleDragEnd }
+							onDragEnd={ handleDragEnd } // funcition to save the replacement of the link icon
 							modifiers={ [ restrictToHorizontalAxis ] } // only horizontal drag drop has access
 						>
 							<SortableContext
 								items={ socialLinks.map(
 									( item ) =>
-										`${ item?.icon }-${ item?.link }` //we pass the socialLinks map to items prop here
+										`${ item?.icon }-${ item?.link }` //we pass the sortable data map to items prop here
 								) }
 								strategy={ horizontalListSortingStrategy }
 							>
 								{ socialLinks.map( ( item, index ) => (
 									<SortableItem
-										key={ `${ item?.icon }-${ item?.link }` }
-										id={ `${ item?.icon }-${ item?.link }` }
+										key={ `${ item?.icon }-${ item?.link }` } //  key must be unique
+										id={ `${ item?.icon }-${ item?.link }` } //  id must be unique
 										index={ index }
 										selectedLink={ selectedLink }
 										setSelectedLink={ setSelectedLink }
