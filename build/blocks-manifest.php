@@ -7,7 +7,7 @@ return array(
 		'name' => 'create-block/team-members',
 		'version' => '0.1.0',
 		'title' => 'Team Members',
-		'category' => 'media',
+		'category' => 'text',
 		'icon' => 'groups',
 		'keywords' => array(
 			'groups',
@@ -30,6 +30,9 @@ return array(
 		'editorStyle' => 'file:./index.css',
 		'style' => 'file:./style-index.css',
 		'viewScript' => 'file:./view.js',
+		'providesContext' => array(
+			'create-block/team-members-columns' => 'columns'
+		),
 		'attributes' => array(
 			'columns' => array(
 				'type' => 'number',

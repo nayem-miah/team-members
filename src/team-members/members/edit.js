@@ -18,7 +18,6 @@ import {
 	TextareaControl,
 	Icon,
 	Tooltip,
-
 } from '@wordpress/components';
 import { useEffect, useState, useRef } from '@wordpress/element';
 
@@ -43,6 +42,7 @@ function Edit( {
 	attributes,
 	setAttributes,
 	noticeOperations,
+	// context,       //context api we get attributes data from parent
 	noticeUI,
 	isSelected, // isSelected prop tells you whether your block is currently selected or not.
 } ) {
@@ -250,7 +250,6 @@ function Edit( {
 						{ isBlobURL( url ) && <Spinner /> }
 					</div>
 				) }
-
 				<MediaPlaceholder
 					icon="admin-users"
 					onSelect={ handleImage }
@@ -261,6 +260,10 @@ function Edit( {
 					disableMediaButtons={ url }
 					notices={ noticeUI }
 				/>
+
+				{/* { context[ 'create-block/team-members-columns' ] } */}     
+				{ /* context api we get attribute*/}
+				
 				<RichText
 					placeholder={ __( 'Member Name', 'team-member' ) }
 					tagName="h4"
@@ -274,7 +277,6 @@ function Edit( {
 					onChange={ handleBio }
 					value={ bio }
 				/>
-
 				<div className="wp-block-blocks-course-team-member-social-links">
 					<ul>
 						{ /* drd drag-drop ------------------------------------------------------------------------------------*/ }
@@ -326,7 +328,6 @@ function Edit( {
 						) }
 					</ul>
 				</div>
-
 				{ selectedLink !== undefined && (
 					<>
 						<SocialLinkForm

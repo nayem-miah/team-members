@@ -5433,7 +5433,7 @@ function findFirstFocusableNode(element) {
   \*************************************/
 /***/ ((module) => {
 
-module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/team-members","version":"0.1.0","title":"Team Members","category":"media","icon":"groups","keywords":["groups","team","teams","group","grid","members"],"description":"A team member grid.","supports":{"html":false,"align":["full","wide"]},"textdomain":"team-members","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","attributes":{"columns":{"type":"number","default":2}},"example":{"attributes":{"columns":2},"innerBlocks":[{"name":"create-block/team-member","attributes":{"name":"Nayem Miah","bio":"Full-Stack Developer","url":"https://picsum.photos/id/1012/300/200","socialLinks":[{"icon":"facebook"},{"icon":"twitter"},{"icon":"instagram"}]}},{"name":"create-block/team-member","attributes":{"name":"Shakib Islam","bio":"Front-end Deeloper","url":"https://picsum.photos/id/1011/300/200","socialLinks":[{"icon":"facebook"},{"icon":"twitter"},{"icon":"instagram"}]}}]}}');
+module.exports = /*#__PURE__*/JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/team-members","version":"0.1.0","title":"Team Members","category":"text","icon":"groups","keywords":["groups","team","teams","group","grid","members"],"description":"A team member grid.","supports":{"html":false,"align":["full","wide"]},"textdomain":"team-members","editorScript":"file:./index.js","editorStyle":"file:./index.css","style":"file:./style-index.css","viewScript":"file:./view.js","providesContext":{"create-block/team-members-columns":"columns"},"attributes":{"columns":{"type":"number","default":2}},"example":{"attributes":{"columns":2},"innerBlocks":[{"name":"create-block/team-member","attributes":{"name":"Nayem Miah","bio":"Full-Stack Developer","url":"https://picsum.photos/id/1012/300/200","socialLinks":[{"icon":"facebook"},{"icon":"twitter"},{"icon":"instagram"}]}},{"name":"create-block/team-member","attributes":{"name":"Shakib Islam","bio":"Front-end Deeloper","url":"https://picsum.photos/id/1011/300/200","socialLinks":[{"icon":"facebook"},{"icon":"twitter"},{"icon":"instagram"}]}}]}}');
 
 /***/ }),
 
@@ -5728,6 +5728,7 @@ function Edit({
   attributes,
   setAttributes,
   noticeOperations,
+  // context,       //context api we get attributes data from parent
   noticeUI,
   isSelected // isSelected prop tells you whether your block is currently selected or not.
 }) {
@@ -6009,6 +6010,8 @@ __webpack_require__.r(__webpack_exports__);
     reusable: false,
     html: false
   },
+  usesContext: ['create-block/team-members-columns'],
+  // context api
   attributes: {
     name: {
       type: 'string',

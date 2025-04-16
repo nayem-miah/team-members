@@ -12,6 +12,7 @@ registerBlockType( 'create-block/team-member', {
 		reusable: false,
 		html: false,
 	},
+	usesContext: [ 'create-block/team-members-columns' ],  // context api
 	attributes: {
 		name: {
 			type: 'string',
